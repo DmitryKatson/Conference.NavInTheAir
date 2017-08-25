@@ -100,5 +100,15 @@ page 71000001 "AIR Flight List"
                 end;
             }
         }
+    
     }
+    trigger OnOpenPage();
+    var
+        AIRFunctions: Codeunit "AIR Functions";
+
+    begin
+      IF NOT AIRFunctions.CheckIfAIRAppIsProperlySetuped Then 
+         EXIT;
+
+    end;
 }
