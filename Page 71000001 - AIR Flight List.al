@@ -49,6 +49,21 @@ page 71000001 "AIR Flight List"
 
     actions
     {
+        area(Creation)
+        {
+            action(CreateWizard)
+            {
+                Image = CreateWhseLoc;
+                Promoted = true;
+                PromotedIsBig = true;
+                PromotedOnly = true;
+                PromotedCategory = New;
+                RunObject = page "AIR Flight Register Wizard";  
+                ApplicationArea = All;   
+                CaptionML = ENU = 'New flight'; 
+                ToolTipML = ENU = 'Register new flight with wizard';          
+            }
+        }
         area(processing)
         {            
             action(Setup)
@@ -60,6 +75,29 @@ page 71000001 "AIR Flight List"
                 PromotedCategory = Report;
                 RunObject = page "AIR Setup";  
                 ApplicationArea = All;              
+            }
+            action(Airplanes)
+            {
+                Image = Components;
+                Promoted = true;
+                PromotedIsBig = true;
+                PromotedOnly = true;
+                PromotedCategory = Report;
+                RunObject = page "Item List";  
+                ApplicationArea = All; 
+
+                trigger OnAction();
+                var
+                    AIRSetup : Record "AIR Setup";
+                    AirplaneCategory: Code [20];
+                    Item: Record Item;
+                begin
+                    AirplaneCategory := AIRSetup.GetAirPlaneCategory();
+                    IF AirplaneCategory = '' THEN 
+                       EXIT;
+                    Item.SETRANGE("Item Category Code",AirplaneCategory);
+                    PAGE.RUN(PAGE::"Item List",Item);
+                end;
             }
         }
     }

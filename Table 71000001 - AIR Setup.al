@@ -43,4 +43,15 @@ table 71000001 "AIR Setup"
     begin
     end;
 
+    procedure GetAirPlaneCategory() : Code[20];
+    var AIRNotification: Codeunit "AIR Notifications";
+    begin
+        IF Not Get OR ("Airplane Category" = '') then
+        Begin
+             AIRNotification.ShowNotificationWhenAIRappIsNotSetupedCorrectly();      
+           EXIT;
+        End;   
+        EXIT("Airplane Category");
+    end;
+
 }
