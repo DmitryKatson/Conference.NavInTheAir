@@ -1,9 +1,9 @@
 {
   "id": "fdfae754-3528-40a3-87c6-351d9af55ba6",
   "name": "NavInTheAir",
-  "publisher": "Default publisher",
+  "publisher": "D365 Meetup",
   "brief": "",
-  "description": "",
+  "description": "This App will register and monitor flights",
   "version": "1.0.0.0",
   "compatibilityId": "1.0.0.0",
   "privacyStatement": "",
@@ -17,6 +17,6 @@
   "platform": "10.0.0.0",
   "application": {
     "version": "10.0.0.0",
-    "locale": "W1"
+    "locale": "US"
   }
 }

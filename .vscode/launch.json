@@ -6,10 +6,10 @@
 			"request": "publish",
 			"name": "Local server",
 			"server": "http://localhost",
-			"serverInstance": "navision_main",
+			"serverInstance": "US",
 			"tenant": "default",
-			"windowsAuthentication": true,
-			"startupObjectId": 22
+			"authentication": "Windows",
+			"startupObjectId": 71000001
 		}
 	]
 }
