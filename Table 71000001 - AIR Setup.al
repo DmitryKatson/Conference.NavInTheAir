@@ -49,6 +49,7 @@ table 71000001 "AIR Setup"
     begin
         IF NOT AIRFunctions.CheckIfAIRAppIsProperlySetuped then
            exit;
+        GET;   
         EXIT("Airplane Category");
     end;
 

@@ -83,7 +83,6 @@ page 71000001 "AIR Flight List"
                 PromotedIsBig = true;
                 PromotedOnly = true;
                 PromotedCategory = Report;
-                RunObject = page "Item List";  
                 ApplicationArea = All; 
 
                 trigger OnAction();

@@ -22,6 +22,6 @@ codeunit 71000000 "AIR Functions"
              AIRNotification.ShowNotificationWhenAIRappIsNotSetupedCorrectly();      
            EXIT(false);
            end;
-
+        EXIT(true);
     end;
 }
