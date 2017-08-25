@@ -156,7 +156,12 @@ page 71000003 "AIR Flight Register Wizard"
   end;
 
   trigger OnOpenPage();
+  var 
+    AIRFunctions: Codeunit "AIR Functions";
   begin
+    IF NOT AIRFunctions.CheckIfAIRAppIsProperlySetuped Then 
+       EXIT;
+
     INSERT;
 
     Step := Step::Start;
