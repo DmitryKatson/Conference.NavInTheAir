@@ -27,6 +27,19 @@ page 71000002 "AIR Setup"
 
     actions
     {
+        area(Navigation)
+        {
+            action(Airports)
+            {
+                RunObject = page "AIR Airports List";
+                Promoted = true;
+                PromotedCategory = Report;
+                PromotedIsBig = true;
+                PromotedOnly = true;
+                Image = CodesList;
+                ApplicationArea = All;
+            }
+        }
         area(processing)
         {
             action(ActionName)
