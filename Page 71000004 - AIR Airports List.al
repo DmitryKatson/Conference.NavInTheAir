@@ -15,14 +15,18 @@ page 71000004 "AIR Airports List"
                 {
                     ApplicationArea  = All;
                 }
+                field(Name;Name)
+                {
+                    ApplicationArea = All;
+                }
                 field(City;City)
                 {
-                    ApplicationArea  = All;
+                    //ApplicationArea  = All;
                 }
 
                 field(Country;Country)
                 {
-                    ApplicationArea  = All;
+                    //ApplicationArea  = All;
                 }
 
 
@@ -40,7 +44,7 @@ page 71000004 "AIR Airports List"
             action(GetAirports)
             {
                 CaptionML = ENU = 'Update';
-                ToolTipML = ENU = 'Update airports from Flightaware service';
+                ToolTipML = ENU = 'Update airports from IATA service';
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedIsBig = true;
@@ -50,9 +54,9 @@ page 71000004 "AIR Airports List"
 
                 trigger OnAction();
                 var
-                  AIRFlightawareFunctions : Codeunit "Air Flightaware functions";
+                  IATAFunctions : Codeunit "AIR IATA Functions";
                 begin
-                    AIRFlightawareFunctions.GetAirports();
+                    IATAFunctions.GetAirports();
                     CurrPage.Update;
                 end;
             }

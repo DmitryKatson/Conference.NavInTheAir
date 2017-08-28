@@ -12,6 +12,9 @@ table 71000002 "AIR Airport"
         field(11;"Country";Code [20])
         {
         }
+        field(12;Name;Text[250])
+        {
+        }
 
 
     }
