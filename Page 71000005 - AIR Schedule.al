@@ -17,15 +17,33 @@ page 71000005 "AIR Schedule"
                 {
                     ApplicationArea = All;
                 }
+                field("Departure Date";"Departure Date")
+                {
+                    ApplicationArea = All;
+                }
+                field("Departure Time";"Departure Time")
+                {
+                    ApplicationArea = All;
+                }
+
+                field("Arrival Date";"Arrival Date")
+                {
+                    ApplicationArea = All;
+                }
+                field("Arrival Time";"Arrival Time")
+                {
+                    ApplicationArea = All;
+                }
                 field(Status;Status)
                 {
                     ApplicationArea = All;
                 }
-                field("Plan Departure Date";"Plan Departure Date")
+
+                field("Progress %";"Progress %")
                 {
                     ApplicationArea = All;
                 }
-                field("Plan Departure Time";"Plan Departure Time")
+                field("Distance filled";"Distance filled")
                 {
                     ApplicationArea = All;
                 }

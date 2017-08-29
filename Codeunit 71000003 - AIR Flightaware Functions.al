@@ -16,7 +16,7 @@ codeunit 71000003 "Air Flightaware functions"
     var
         Arguments : Record "AIR WebService Argument";
     begin
-        InitArguments(Arguments,STRSUBSTNO('AirportBoards?airport_code=%1&type=departures',FromAirport));//change request here
+        InitArguments(Arguments,STRSUBSTNO('AirportBoards?airport_code=%1&type=departures&howMany=100',FromAirport));//change request here
         IF not CallWebService(Arguments) then
            EXIT;
         SaveResultInAirportDepartureTable(Arguments);
@@ -26,7 +26,6 @@ codeunit 71000003 "Air Flightaware functions"
     var
     begin
        WITH Arguments DO begin
-           //URL := STRSUBSTNO('https://%1:%2@%3%4',GetUserName,GetAPIKey,GetBaseURL,APIRequest);
            URL        := STRSUBSTNO('%1%2',GetBaseURL,APIRequest);
            //Message(STRSUBSTNO('https://%1:%2@%3%4',GetUserName,GetAPIKey,GetBaseURL,APIRequest));
            RestMethod := RestMethod::get;
@@ -97,10 +96,14 @@ codeunit 71000003 "Air Flightaware functions"
                 "Flight Number" := WebService.GetJsonToken(JsonObject,'ident').AsValue.AsText;
                 Departure       := WebService.SelectJsonToken(JsonObject,'$.origin.alternate_ident').AsValue.AsText;
                 Destination     := WebService.SelectJsonToken(JsonObject,'$.destination.alternate_ident').AsValue.AsText;
-                //"Plan Departure Date" := WebService.SelectJsonToken(JsonObject,'$.filed_departure_time.date').AsValue.AsDate;
-                //"Plan Departure Time" := WebService.SelectJsonToken(JsonObject,'$.filed_departure_time.time').AsValue.AsTime;
-                //"Plan Arrival Date" :=;
-                //"Plan Arrival Time" := ;
+                "Departure Date" := WebService.SelectJsonToken(JsonObject,'$.filed_departure_time.date').AsValue.AsText;
+                "Departure Time" := WebService.SelectJsonToken(JsonObject,'$.filed_departure_time.time').AsValue.AsText;
+                "Arrival Date"   := WebService.SelectJsonToken(JsonObject,'$.filed_arrival_time.date').AsValue.AsText;;
+                "Arrival Time"   := WebService.SelectJsonToken(JsonObject,'$.filed_arrival_time.time').AsValue.AsText;;
+                "Aircraft Type" := WebService.GetJsonToken(JsonObject,'aircrafttype').AsValue.AsText;
+                "Progress %"   := WebService.GetJsonToken(JsonObject,'progress_percent').AsValue.AsDecimal;
+                //"Distance filled" := WebService.GetJsonToken(JsonObject,'distance_filed').AsValue.AsDecimal;
+                Status         := GetStatus();
                 INSERT;
             end;
         end;

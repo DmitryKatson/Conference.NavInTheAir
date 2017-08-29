@@ -37,4 +37,27 @@ codeunit 71000000 "AIR Functions"
         Item.SETRANGE("Item Category Code",AirplaneCategory);
         PAGE.RUN(PAGE::"Item List",Item);
     end;
+
+    procedure ChooseFromAirplanesList(): Code [20];
+    var
+        AIRSetup : Record "AIR Setup";
+        AirplaneCategory: Code [20];
+        Item: Record Item;
+    begin
+        AirplaneCategory := AIRSetup.GetAirPlaneCategory();
+        IF AirplaneCategory = '' THEN 
+            EXIT;
+        Item.SETRANGE("Item Category Code",AirplaneCategory);
+        if PAGE.RUNMODAL(PAGE::"Item List",Item) = "Action"::LookupOK then
+           EXIT(Item."No.");
+    end;
+
+
+    procedure GetAirplaneItemNoFromAirplaneType(AirplaneType : Text) : code[20];
+    var
+        item : record Item;
+    begin
+        //find item
+        EXIT('');
+    end;
 }

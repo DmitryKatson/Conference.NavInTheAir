@@ -74,6 +74,7 @@ page 71000003 "AIR Flight Register Wizard"
              begin
                If Departure <> '' Then
                   FlightAwareFunctions.GetDepartures(Departure);
+               SetFieldsEditable();
              end;
           }
 
@@ -83,10 +84,26 @@ page 71000003 "AIR Flight Register Wizard"
              CaptionML=ENU='Flight number';
              ShowMandatory = true;
              TableRelation = "AIR Schedule";
+             Editable = FlightNoEditable;
+
+             trigger OnValidate();
+             var
+             begin
+               SetFieldsEditable();
+               FillFieldsFromFlightNo(FlightNo,Rec);
+             end;
           }
           field("Aircraft Item No.";"Aircraft Item No.")
           {
             ApplicationArea=All;
+            Editable = AircraftItemNoEditable;
+            trigger OnDrillDown();
+            var
+              AIRFunctions : Codeunit "AIR Functions";
+            begin
+               AIRFunctions.ShowAirplanesList(); 
+            end;
+
           }
             
           field(Destination;Destination)
@@ -94,6 +111,7 @@ page 71000003 "AIR Flight Register Wizard"
             ApplicationArea=All;
             CaptionML=ENU='Destination';
             ShowMandatory = true;
+            Editable = DestinationEditable;
 
           }
           field("Passangers number";"Passangers number")
@@ -101,6 +119,8 @@ page 71000003 "AIR Flight Register Wizard"
             ApplicationArea=All;
             CaptionML=ENU='Passangers number';
             ShowMandatory = true;
+            Editable = PassangersEditable;
+            BlankZero = true;
           }
          }
 
@@ -194,6 +214,10 @@ page 71000003 "AIR Flight Register Wizard"
     NextActionEnabled : Boolean;
     FlightNo : Code[20];
     SelectFlightNumberMsg: TextConst ENU = 'Fill Flight Number to Finish';
+    FlightNoEditable : Boolean;
+    AircraftItemNoEditable : Boolean;
+    DestinationEditable : Boolean;
+    PassangersEditable : Boolean;
 
   local procedure EnableControls();
   begin
@@ -305,6 +329,14 @@ page 71000003 "AIR Flight Register Wizard"
         TopBannerVisible := MediaResourcesDone."Media Reference".HASVALUE;
   end;
 
+  local procedure SetFieldsEditable();
+  var
+  begin
+    FlightNoEditable := Departure <> '';
+    AircraftItemNoEditable := FlightNo <> '';
+    DestinationEditable := FlightNo <> '';
+    PassangersEditable := FlightNo <> '';
+  end;
 }
 
 

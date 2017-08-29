@@ -23,8 +23,14 @@ table 71000000 "AIR Flight"
 
         field(9;  "Aircraft Item No.";Code[20])
         {
-            TableRelation = Item."No." Where (Type = const(Inventory));
+            //TableRelation = Item."No." Where (Type = const(Inventory));
             CaptionML = ENU = 'Aircraft Item No.';
+            trigger OnLookup();
+            var
+              AIRFunctions: Codeunit "AIR Functions";
+            begin
+                "Aircraft Item No." := AIRFunctions.ChooseFromAirplanesList();
+            end;
 
         }
         
@@ -99,6 +105,20 @@ table 71000000 "AIR Flight"
 
     trigger OnRename();
     begin
+    end;
+
+    procedure FillFieldsFromFlightNo(Flight: code [20];var AirFlight: Record "AIR Flight");
+    var
+      Schedule : Record "AIR Schedule";
+      AIRFunctions : Codeunit "AIR Functions";
+    begin
+      if Schedule.Get(Flight) THEN
+        WITH AirFlight do 
+        begin
+            Departure := Schedule.Departure;
+            Destination := Schedule.Destination;
+            "Aircraft Item No." := AIRFunctions.GetAirplaneItemNoFromAirplaneType('');
+        end;     
     end;
 
 }
