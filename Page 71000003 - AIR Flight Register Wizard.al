@@ -63,11 +63,26 @@ page 71000003 "AIR Flight Register Wizard"
           InstructionalTextML=ENU='Fill in the following fields';
           Visible=SecondStepVisible;
 
+          field(Departure;Departure)
+          {
+             ApplicationArea=All;
+             ShowMandatory = true;
+            
+            trigger OnValidate();
+             var
+               FlightAwareFunctions : codeunit "Air Flightaware functions";
+             begin
+               If Departure <> '' Then
+                  FlightAwareFunctions.GetDepartures(Departure);
+             end;
+          }
+
           field(FlightNo;FlightNo)
           {
              ApplicationArea=All;
              CaptionML=ENU='Flight number';
              ShowMandatory = true;
+             TableRelation = "AIR Schedule";
           }
           field("Aircraft Item No.";"Aircraft Item No.")
           {

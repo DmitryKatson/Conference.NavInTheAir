@@ -39,15 +39,23 @@ page 71000002 "AIR Setup"
                 Image = CodesList;
                 ApplicationArea = All;
             }
-        }
-        area(processing)
-        {
-            action(ActionName)
+            action(Airplanes)
             {
+                Image = Components;
+                Promoted = true;
+                PromotedIsBig = true;
+                PromotedOnly = true;
+                PromotedCategory = Report;
+                ApplicationArea = All; 
+
                 trigger OnAction();
+                var
+                    AIRFunctions : Codeunit "AIR Functions";
                 begin
+                    AIRFunctions.ShowAirplanesList();
                 end;
             }
+
         }
     }
     

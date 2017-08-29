@@ -66,7 +66,6 @@ codeunit 71000005 "AIR IATA Functions"
         ResponseInTextFormat := Arguments.GetResponseContentAsText;
 
         HandleResponseForJsonArrayFormat(ResponseInTextFormat);
-        Message(ResponseInTextFormat);
 
         If not JsonArray.ReadFrom(ResponseInTextFormat) then
           error('Invalid response, expected an JSON array as root object');

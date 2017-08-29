@@ -87,15 +87,9 @@ page 71000001 "AIR Flight List"
 
                 trigger OnAction();
                 var
-                    AIRSetup : Record "AIR Setup";
-                    AirplaneCategory: Code [20];
-                    Item: Record Item;
+                    AIRFunctions : Codeunit "AIR Functions";
                 begin
-                    AirplaneCategory := AIRSetup.GetAirPlaneCategory();
-                    IF AirplaneCategory = '' THEN 
-                       EXIT;
-                    Item.SETRANGE("Item Category Code",AirplaneCategory);
-                    PAGE.RUN(PAGE::"Item List",Item);
+                    AIRFunctions.ShowAirplanesList();
                 end;
             }
         }
