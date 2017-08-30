@@ -24,6 +24,7 @@ table 71000000 "AIR Flight"
         field(9;  "Aircraft Item No.";Code[20])
         {
             //TableRelation = Item."No." Where (Type = const(Inventory));
+            
             CaptionML = ENU = 'Aircraft Item No.';
             trigger OnLookup();
             var
@@ -31,6 +32,7 @@ table 71000000 "AIR Flight"
             begin
                 "Aircraft Item No." := AIRFunctions.ChooseFromAirplanesList();
             end;
+            
 
         }
         
@@ -117,7 +119,8 @@ table 71000000 "AIR Flight"
         begin
             Departure := Schedule.Departure;
             Destination := Schedule.Destination;
-            "Aircraft Item No." := AIRFunctions.GetAirplaneItemNoFromAirplaneType('');
+            "Aircraft Item No." := AIRFunctions.GetAirplaneItemNoFromAirplaneType("Aircraft Type");
+            Status := Status;
         end;     
     end;
 

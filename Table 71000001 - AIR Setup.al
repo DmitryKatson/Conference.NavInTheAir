@@ -53,4 +53,15 @@ table 71000001 "AIR Setup"
         EXIT("Airplane Category");
     end;
 
+    procedure GetAirPlaneAttribute() : Code[20];
+    var 
+    AIRFunctions : Codeunit "AIR Functions";
+    begin
+        IF NOT AIRFunctions.CheckIfAIRAppIsProperlySetuped then
+           exit;
+        GET;   
+        EXIT("Airplane Type Attribute");
+    end;
+
+
 }

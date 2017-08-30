@@ -56,8 +56,38 @@ codeunit 71000000 "AIR Functions"
     procedure GetAirplaneItemNoFromAirplaneType(AirplaneType : Text) : code[20];
     var
         item : record Item;
+        TempFilterItemAttributesBuffer : Record "Filter Item Attributes Buffer" temporary;
+        ItemAttributeManagement : Codeunit "Item Attribute Management";
+        TempFilteredItem : Record Item temporary;
     begin
-        //find item
-        EXIT('');
+        FillItemAttributesBufferFilter(AirplaneType,TempFilterItemAttributesBuffer);
+        ItemAttributeManagement.FindItemsByAttributes(TempFilterItemAttributesBuffer,TempFilteredItem);    
+        EXIT(GetItemNoFromItemsFilteredByAttributes(TempFilteredItem));
+    end;
+
+    procedure FillItemAttributesBufferFilter(Value:Text; VAR TempFilterItemAttributesBuffer : Record "Filter Item Attributes Buffer" temporary);
+    var
+        ItemAttributeManagement : Codeunit "Item Attribute Management"; 
+        AIRSetup : Record "AIR Setup";       
+    begin
+       WITH TempFilterItemAttributesBuffer do
+       begin
+         INIT;
+         Attribute := AIRSetup.GetAirPlaneAttribute;
+         Value    := Value;
+         Insert;
+       end; 
+    end;
+
+    local procedure GetItemNoFromItemsFilteredByAttributes(TempFilteredItem : Record Item temporary): Code[20];
+    var
+    begin
+       IF TempFilteredItem.COUNT = 1 then
+       begin
+           TempFilteredItem.FindFirst;
+           EXIT(TempFilteredItem."No.");
+       end;
+       EXIT(''); 
+    
     end;
 }

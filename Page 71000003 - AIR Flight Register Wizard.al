@@ -97,12 +97,6 @@ page 71000003 "AIR Flight Register Wizard"
           {
             ApplicationArea=All;
             Editable = AircraftItemNoEditable;
-            trigger OnDrillDown();
-            var
-              AIRFunctions : Codeunit "AIR Functions";
-            begin
-               AIRFunctions.ShowAirplanesList(); 
-            end;
 
           }
             
