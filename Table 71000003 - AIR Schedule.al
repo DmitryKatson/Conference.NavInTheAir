@@ -67,6 +67,11 @@ table 71000003 "AIR Schedule"
             CaptionML = ENU = 'City';
         }
 
+        field(20;"Flight ID";Text[50])
+        {
+            CaptionML = ENU = 'Flight ID';
+        }
+
 
     }
 

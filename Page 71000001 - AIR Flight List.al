@@ -32,11 +32,11 @@ page 71000001 "AIR Flight List"
                 {
                     ApplicationArea = All;
                 }
-                field("Actual Departure Date";"Actual Departure Date")
+                field("Actual Departure Date";"Departure Date")
                 {
                     ApplicationArea = All;
                 }
-                field("Actual Departure Time";"Actual Departure Time")
+                field("Actual Departure Time";"Departure Time")
                 {
                     ApplicationArea = All;
                 }

@@ -44,31 +44,35 @@ page 71000000 "AIR Flight Card"
                 group(DepartureDates)
                 {
                     Visible = isInTheAirOrLanded; 
-                    field("Actual Departure Date";"Actual Departure Date")
+                    CaptionML = ENU = 'Departure';
+                    Editable = false;
+                    field("Departure Date";"Departure Date")
                     {
                         ApplicationArea = All;
                         Importance = Additional;
                     }
-                    field("Actual Departure Time";"Actual Departure Time")
+                    field("Departure Time";"Departure Time")
                     {
                         ApplicationArea = All;
                         Importance = Additional;
-                        ShowCaption = false;
+                        //ShowCaption = false;
                     }
                 }
                 group(ArrivalDates)
                 {
                     Visible = IsLanded; 
-                    field("Actual Arrival Date";"Actual Arrival Date")
+                    CaptionML = ENU = 'Arrival';
+                    Editable = false;
+                    field("Actual Arrival Date";"Arrival Date")
                     {
                         ApplicationArea = All;
                         Importance = Additional;
                     }
-                    field("Actual Arrival Time";"Actual Arrival Time")
+                    field("Actual Arrival Time";"Arrival Time")
                     {
                         ApplicationArea = All;
                         Importance = Additional;
-                        ShowCaption = false;
+                        //ShowCaption = false;
                     }
                 }
 
@@ -80,12 +84,45 @@ page 71000000 "AIR Flight Card"
     {
         area(processing)
         {
-            action(ActionName)
+            action(UpdateStatus)
             {
+                CaptionML = ENU = 'Update';
+                ToolTipML = ENU = 'Update status from Flightaware service';
+                Promoted = true;
+                PromotedCategory = Process;
+                PromotedIsBig = true;
+                PromotedOnly = true;
+                ApplicationArea = All;
+                Image = Refresh;
+
                 trigger OnAction();
+                var
+                  FlightawareFunctions : Codeunit "AIR Flightaware Functions";
                 begin
+                    FlightawareFunctions.GetFlightStatus("Flight Number");
+                    CurrPage.Update;
                 end;
             }
+            action(ShowFlight)
+            {
+                CaptionML = ENU = 'Show Flight';
+                ToolTipML = ENU = 'Show this flight in Flightaware service';
+                Promoted = true;
+                PromotedCategory = Process;
+                PromotedIsBig = true;
+                PromotedOnly = true;
+                ApplicationArea = All;
+                Image = LinkWeb;
+
+                trigger OnAction();
+                var
+                  FlightawareFunctions : Codeunit "AIR Flightaware Functions";
+                begin
+                    FlightawareFunctions.ShowFlight("Flight Number");
+                    CurrPage.Update;
+                end;
+            }
+
         }
     }
     

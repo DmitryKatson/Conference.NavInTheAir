@@ -85,6 +85,32 @@ codeunit 71000000 "AIR Functions"
         EXIT(GetItemNoFromItemsFilteredByAttributes(TempFilteredItem));
     end;
 
+    procedure GetAirPlaneTypeValueNameFromItemNo(ItemNo: Code[20]):text[250];
+    var
+        ItemAttributeValueMapping: Record "Item Attribute Value Mapping";
+        ItemAttributeValue :Record "Item Attribute Value";
+        AIRSetup: Record "AIR Setup";
+    begin
+        with ItemAttributeValueMapping do begin 
+          SETRANGE("Table ID",DATABASE::Item);
+          SETRANGE("No.",ItemNo);
+          SetRange("Item Attribute ID",GetItemAttributeIDFromName(AIRSetup.GetAirPlaneAttribute));
+          IF FINDFIRST then
+            if ItemAttributeValue.GET("Item Attribute ID","Item Attribute Value ID") then
+               ItemAttributeValue.CalcFields("Attribute Name");
+        end;  
+        exit(ItemAttributeValue."Attribute Name");   
+    end;
+
+    local procedure GetItemAttributeIDFromName(Name:Text):Integer;
+    var
+      ItemAttribute :Record "Item Attribute";
+    begin
+        ItemAttribute.SetRange(Name,Name);
+        if ItemAttribute.FindFirst then
+         exit(ItemAttribute.ID);
+    end;
+
     procedure FillItemAttributesBufferFilter(ValueFilter:Text; VAR TempFilterItemAttributesBuffer : Record "Filter Item Attributes Buffer" temporary);
     var
         ItemAttributeManagement : Codeunit "Item Attribute Management"; 

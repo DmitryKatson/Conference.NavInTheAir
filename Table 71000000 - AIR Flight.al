@@ -29,8 +29,11 @@ table 71000000 "AIR Flight"
             trigger OnLookup();
             var
               AIRFunctions: Codeunit "AIR Functions";
+              ItemNo : Code[20];
             begin
-                "Aircraft Item No." := AIRFunctions.ChooseFromAirplanesList("Aircraft Type");
+                ItemNo := AIRFunctions.ChooseFromAirplanesList("Aircraft Type");
+                If ItemNo <> '' then
+                   VALIDATE("Aircraft Item No.",ItemNo);
             end;
             
 
@@ -41,22 +44,22 @@ table 71000000 "AIR Flight"
             CaptionML = ENU = 'Aircraft type';
 
         }
-        field(11;"Actual Departure Date"; Date)
+        field(11;"Departure Date"; Text[30])
         {
             CaptionML = ENU = 'Actual departure date';
 
         }
-        field(12;"Actual Departure Time";Time)
+        field(12;"Departure Time";Text[30])
         {
             CaptionML = ENU = 'Actual departure time';
 
         }
-        field(13;"Actual Arrival Date"; Date)
+        field(13;"Arrival Date"; Text[30])
         {
             CaptionML = ENU = 'Actual arrival date';
 
         }
-        field(14;"Actual Arrival Time";Time)
+        field(14;"Arrival Time";Text[30])
         {
             CaptionML = ENU = 'Actual arrival date';
 
@@ -68,17 +71,21 @@ table 71000000 "AIR Flight"
             
         }
 
-        field(16;"Passangers number"; Integer)
-        {
-            CaptionML = ENU = 'Passangers number';
-
-        }
         field(17;Status;Option)
         {
             OptionMembers = "Did not take off","In the air","Landed";
             OptionCaptionML = ENU = 'Did not take off,In the air,Landed';
         }
 
+        field(26;"Passangers number"; Integer)
+        {
+            CaptionML = ENU = 'Passangers number';
+
+        }
+        field(20;"Flight ID";Text[50])
+        {
+            CaptionML = ENU = 'Flight ID';
+        }
 
     }
 
@@ -91,7 +98,6 @@ table 71000000 "AIR Flight"
     }
     
     var
-        myInt : Integer;
 
     trigger OnInsert();
     begin
@@ -113,15 +119,17 @@ table 71000000 "AIR Flight"
     var
       Schedule : Record "AIR Schedule";
       AIRFunctions : Codeunit "AIR Functions";
+
     begin
       if Schedule.Get(Flight) THEN
         WITH AirFlight do 
-        begin
-            Departure := Schedule.Departure;
-            Destination := Schedule.Destination;
-            "Aircraft Type" := Schedule."Aircraft Type";
+        begin            
+            Transferfields(Schedule,false);
+            //Departure := Schedule.Departure;
+            //Destination := Schedule.Destination;
+            //"Aircraft Type" := Schedule."Aircraft Type";
             "Aircraft Item No." := AIRFunctions.GetAirplaneItemNoFromAirplaneType("Aircraft Type");
-            Status := Schedule.Status;
+            //Status := Schedule.Status;
         end;     
     end;
 

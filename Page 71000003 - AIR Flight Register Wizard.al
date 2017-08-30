@@ -91,6 +91,7 @@ page 71000003 "AIR Flight Register Wizard"
              begin
                SetFieldsEditable();
                FillFieldsFromFlightNo(FlightNo,Rec);
+               CurrPage.Update;
              end;
           }
           field("Aircraft Item No.";"Aircraft Item No.")

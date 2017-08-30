@@ -22,6 +22,31 @@ codeunit 71000003 "Air Flightaware functions"
         SaveResultInAirportDepartureTable(Arguments);
     end;
 
+    procedure GetFlightStatus(FlightNo:Code[20]);
+    begin
+       GetFlightStatusFromFlightAwareInXML3Format(FlightNo);         
+    end;
+
+    local procedure GetFlightStatusFromFlightAwareInXML3Format(FlightNo :Code[20]);
+    var
+        Arguments : Record "AIR WebService Argument";
+    begin
+        InitArguments(Arguments,STRSUBSTNO('FlightInfoStatus?ident=%1',FlightNo));//change request here
+        IF not CallWebService(Arguments) then
+           EXIT;
+        SaveResultInFlightTable(Arguments);
+    end;
+
+    procedure ShowFlight(FlightNo :Code[20]);
+    begin
+        Hyperlink(STRSUBSTNO('https://ru.flightaware.com/live/flight/%1',FlightNo));
+    end;
+
+    procedure ShowCurrentFlightsForAirplaneType(AirplaneType:Code[20]);
+    begin
+        Hyperlink(STRSUBSTNO('https://ru.flightaware.com/live/aircrafttype/%1',AirplaneType));
+    end;
+
     local procedure InitArguments(var Arguments: Record "AIR WebService Argument" temporary; APIRequest: Text);
     var
     begin
@@ -75,8 +100,6 @@ codeunit 71000003 "Air Flightaware functions"
         ResponseInTextFormat := Arguments.GetResponseContentAsText;
         
         HandleResponseForJsonArrayFormat(ResponseInTextFormat);
-        //Message(ResponseInTextFormat);
-
 
         Schedule.DeleteAll;
 
@@ -105,6 +128,7 @@ codeunit 71000003 "Air Flightaware functions"
                     "Progress %"     := WebService.GetJsonValueAsDecimal(JsonObject,'progress_percent');
                     "Distance"       := WebService.GetJsonValueAsDecimal(JsonObject,'distance_filed');
                     "Destination City":= WebService.SelectJsonValueAsText(JsonObject,'$.destination.city');
+                    "Flight ID"      := WebService.GetJsonValueAsText(JsonObject,'faFlightID');
                     Status         := GetStatus();
                     INSERT;
                 end;
@@ -113,16 +137,56 @@ codeunit 71000003 "Air Flightaware functions"
         
     end;
 
+    local procedure SaveResultInFlightTable(var Arguments: Record "AIR WebService Argument" temporary)
+    var
+        Flight : Record "AIR Flight";
+        Schedule : Record "AIR Schedule";
+        WebService : Codeunit "AIR WebService Call Functions";
+        JsonArray :JsonArray;
+        JsonToken: JsonToken;
+        JsonObject: JsonObject;
+        i : Integer;
+        ResponseInTextFormat :Text;
+
+    begin
+        ResponseInTextFormat := Arguments.GetResponseContentAsText;
+
+        HandleResponseForJsonArrayFormat(ResponseInTextFormat);
+
+        If not JsonArray.ReadFrom(ResponseInTextFormat) then
+          error('Invalid response, expected an JSON array as root object');
+       
+        For i:= 0 to JsonArray.Count - 1 do
+        begin 
+            JsonArray.Get(i,JsonToken);
+            JsonObject := JsonToken.AsObject;
+
+            WITH Flight do
+                //WebService.GetJsonToken(JsonObject,'country_code').AsValue.AsText; //if field
+                //WebService.SelectJsonToken(JsonObject,'$.user.login').AsValue.AsText; //if nested structure
+                if JsonObject.GET('ident',JsonToken) THEN
+                    If GET(WebService.GetJsonValueAsText(JsonObject,'ident')) And
+                       ("Flight ID" = WebService.GetJsonValueAsText(JsonObject,'faFlightID')) then
+                    begin
+                      Schedule."Progress %" := WebService.GetJsonValueAsDecimal(JsonObject,'progress_percent');
+                      Status                := Schedule.GetStatus();
+                      Modify;
+                      exit;
+                    end;
+        end;
+        
+    end;
+
+
     local procedure HandleResponseForJsonArrayFormat(var Response:Text);
     var
        CopyFrom : Integer;
        CopyTo   : Integer;
-       Lenght   : Integer;
     begin
-        Lenght := StrLen(Response);
         CopyFrom := GetStartPositionOfJsonArray(Response);
         CopyTo   := GetLastPositionOfJsonArray(Response);
-        Response := CopyStr(Response,CopyFrom,Lenght - CopyFrom - 2);
+        IF CopyTo > CopyFrom then
+           Response := CopyStr(Response,CopyFrom,CopyTo-CopyFrom + 1);
     end;
 
     local procedure GetStartPositionOfJsonArray(Response:Text):Integer;
