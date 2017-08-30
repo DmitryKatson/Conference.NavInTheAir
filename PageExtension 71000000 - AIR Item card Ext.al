@@ -8,7 +8,7 @@ pageextension 71000000 "AIR Item Card Ext." extends "Item Card"
     actions
     {
         // Add changes to page actions here
-        addafter("Assembly BOM") 
+        addbefore(Warehouse) 
         {
             action(ShowLiveFlights)
             {
@@ -18,6 +18,8 @@ pageextension 71000000 "AIR Item Card Ext." extends "Item Card"
                 Promoted = true;
                 PromotedCategory = Report;
                 PromotedIsBig = true;
+                Image = Map;
+                PromotedOnly = false;
                 
                 trigger OnAction(); 
                 var

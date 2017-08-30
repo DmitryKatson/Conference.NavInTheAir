@@ -97,16 +97,15 @@ codeunit 71000000 "AIR Functions"
           SetRange("Item Attribute ID",GetItemAttributeIDFromName(AIRSetup.GetAirPlaneAttribute));
           IF FINDFIRST then
             if ItemAttributeValue.GET("Item Attribute ID","Item Attribute Value ID") then
-               ItemAttributeValue.CalcFields("Attribute Name");
-        end;  
-        exit(ItemAttributeValue."Attribute Name");   
+               exit(ItemAttributeValue.Value);;
+        end;             
     end;
 
     local procedure GetItemAttributeIDFromName(Name:Text):Integer;
     var
       ItemAttribute :Record "Item Attribute";
     begin
-        ItemAttribute.SetRange(Name,Name);
+        ItemAttribute.Setfilter(Name,STRSUBSTNO('@%1',Name));
         if ItemAttribute.FindFirst then
          exit(ItemAttribute.ID);
     end;
