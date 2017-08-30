@@ -13,7 +13,7 @@ table 71000001 "AIR Setup"
         }
         field(11;"Airplane Type Attribute";Code[20])
         {
-            TableRelation = "Item Attribute".ID;
+            TableRelation = "Item Attribute".Name;
         }
     }
 

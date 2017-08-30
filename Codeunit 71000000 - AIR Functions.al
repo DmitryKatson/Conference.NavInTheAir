@@ -38,7 +38,7 @@ codeunit 71000000 "AIR Functions"
         PAGE.RUN(PAGE::"Item List",Item);
     end;
 
-    procedure ChooseFromAirplanesList(): Code [20];
+    procedure ChooseFromAirplanesList(AirplaneType : Text): Code [20];
     var
         AIRSetup : Record "AIR Setup";
         AirplaneCategory: Code [20];
@@ -48,10 +48,30 @@ codeunit 71000000 "AIR Functions"
         IF AirplaneCategory = '' THEN 
             EXIT;
         Item.SETRANGE("Item Category Code",AirplaneCategory);
+        FilterItemsByAirplaneType(Item,AirplaneType);
         if PAGE.RUNMODAL(PAGE::"Item List",Item) = "Action"::LookupOK then
            EXIT(Item."No.");
     end;
 
+
+    local procedure FilterItemsByAirplaneType(var item : record Item;AirplaneType : Text);
+    var
+        TempFilterItemAttributesBuffer : Record "Filter Item Attributes Buffer" temporary;
+        ItemAttributeManagement : Codeunit "Item Attribute Management";
+        TempFilteredItem : Record Item temporary;
+        FilterText : Text;
+        ParameterCount : Integer;
+        TypeHelper: Codeunit "Type Helper";
+    begin
+        FillItemAttributesBufferFilter(AirplaneType,TempFilterItemAttributesBuffer);
+        ItemAttributeManagement.FindItemsByAttributes(TempFilterItemAttributesBuffer,TempFilteredItem);    
+        FilterText := ItemAttributeManagement.GetItemNoFilterText(TempFilteredItem,ParameterCount);
+        IF ParameterCount < TypeHelper.GetMaxNumberOfParametersInSQLQuery - 100 THEN BEGIN
+            item.FILTERGROUP(0);
+            item.MARKEDONLY(FALSE);
+            item.SETFILTER("No.",FilterText);
+        END;
+    end;
 
     procedure GetAirplaneItemNoFromAirplaneType(AirplaneType : Text) : code[20];
     var
@@ -65,7 +85,7 @@ codeunit 71000000 "AIR Functions"
         EXIT(GetItemNoFromItemsFilteredByAttributes(TempFilteredItem));
     end;
 
-    procedure FillItemAttributesBufferFilter(Value:Text; VAR TempFilterItemAttributesBuffer : Record "Filter Item Attributes Buffer" temporary);
+    procedure FillItemAttributesBufferFilter(ValueFilter:Text; VAR TempFilterItemAttributesBuffer : Record "Filter Item Attributes Buffer" temporary);
     var
         ItemAttributeManagement : Codeunit "Item Attribute Management"; 
         AIRSetup : Record "AIR Setup";       
@@ -73,13 +93,13 @@ codeunit 71000000 "AIR Functions"
        WITH TempFilterItemAttributesBuffer do
        begin
          INIT;
-         Attribute := AIRSetup.GetAirPlaneAttribute;
-         Value    := Value;
+         VALIDATE(Attribute,AIRSetup.GetAirPlaneAttribute);
+         VALIDATE(Value,ValueFilter);
          Insert;
        end; 
     end;
 
-    local procedure GetItemNoFromItemsFilteredByAttributes(TempFilteredItem : Record Item temporary): Code[20];
+    local procedure GetItemNoFromItemsFilteredByAttributes(var TempFilteredItem : Record Item temporary): Code[20];
     var
     begin
        IF TempFilteredItem.COUNT = 1 then

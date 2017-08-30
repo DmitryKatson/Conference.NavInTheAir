@@ -92,19 +92,22 @@ codeunit 71000003 "Air Flightaware functions"
                 //WebService.GetJsonToken(JsonObject,'country_code').AsValue.AsText; //if field
                 //WebService.SelectJsonToken(JsonObject,'$.user.login').AsValue.AsText; //if nested structure
 
-                INIT;
-                "Flight Number" := WebService.GetJsonToken(JsonObject,'ident').AsValue.AsText;
-                Departure       := WebService.SelectJsonToken(JsonObject,'$.origin.alternate_ident').AsValue.AsText;
-                Destination     := WebService.SelectJsonToken(JsonObject,'$.destination.alternate_ident').AsValue.AsText;
-                "Departure Date" := WebService.SelectJsonToken(JsonObject,'$.filed_departure_time.date').AsValue.AsText;
-                "Departure Time" := WebService.SelectJsonToken(JsonObject,'$.filed_departure_time.time').AsValue.AsText;
-                "Arrival Date"   := WebService.SelectJsonToken(JsonObject,'$.filed_arrival_time.date').AsValue.AsText;;
-                "Arrival Time"   := WebService.SelectJsonToken(JsonObject,'$.filed_arrival_time.time').AsValue.AsText;;
-                "Aircraft Type" := WebService.GetJsonToken(JsonObject,'aircrafttype').AsValue.AsText;
-                "Progress %"   := WebService.GetJsonToken(JsonObject,'progress_percent').AsValue.AsDecimal;
-                //"Distance filled" := WebService.GetJsonToken(JsonObject,'distance_filed').AsValue.AsDecimal;
-                Status         := GetStatus();
-                INSERT;
+                if JsonObject.GET('ident',JsonToken) THEN begin
+                    INIT;
+                    "Flight Number"  := WebService.GetJsonValueAsText(JsonObject,'ident');
+                    Departure        := WebService.SelectJsonValueAsText(JsonObject,'$.origin.alternate_ident');
+                    Destination      := WebService.SelectJsonValueAsText(JsonObject,'$.destination.alternate_ident');
+                    "Departure Date" := WebService.SelectJsonValueAsText(JsonObject,'$.filed_departure_time.date');
+                    "Departure Time" := WebService.SelectJsonValueAsText(JsonObject,'$.filed_departure_time.time');
+                    "Arrival Date"   := WebService.SelectJsonValueAsText(JsonObject,'$.filed_arrival_time.date');
+                    "Arrival Time"   := WebService.SelectJsonValueAsText(JsonObject,'$.filed_arrival_time.time');
+                    "Aircraft Type"  := WebService.GetJsonValueAsText(JsonObject,'aircrafttype');
+                    "Progress %"     := WebService.GetJsonValueAsDecimal(JsonObject,'progress_percent');
+                    "Distance"       := WebService.GetJsonValueAsDecimal(JsonObject,'distance_filed');
+                    "Destination City":= WebService.SelectJsonValueAsText(JsonObject,'$.destination.city');
+                    Status         := GetStatus();
+                    INSERT;
+                end;
             end;
         end;
         

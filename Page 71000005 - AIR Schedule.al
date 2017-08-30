@@ -43,7 +43,7 @@ page 71000005 "AIR Schedule"
                 {
                     ApplicationArea = All;
                 }
-                field("Distance filled";"Distance filled")
+                field("Distance";"Distance")
                 {
                     ApplicationArea = All;
                 }

@@ -30,7 +30,7 @@ table 71000000 "AIR Flight"
             var
               AIRFunctions: Codeunit "AIR Functions";
             begin
-                "Aircraft Item No." := AIRFunctions.ChooseFromAirplanesList();
+                "Aircraft Item No." := AIRFunctions.ChooseFromAirplanesList("Aircraft Type");
             end;
             
 
@@ -119,8 +119,9 @@ table 71000000 "AIR Flight"
         begin
             Departure := Schedule.Departure;
             Destination := Schedule.Destination;
+            "Aircraft Type" := Schedule."Aircraft Type";
             "Aircraft Item No." := AIRFunctions.GetAirplaneItemNoFromAirplaneType("Aircraft Type");
-            Status := Status;
+            Status := Schedule.Status;
         end;     
     end;
 

@@ -39,15 +39,51 @@ codeunit 71000004 "AIR WebService Call Functions"
         EXIT(ResponseMessage.IsSuccessStatusCode);
     end;
 
-    procedure GetJsonToken(JsonObject:JsonObject;TokenKey:text)JsonToken:JsonToken;
+    procedure GetJsonValueAsText(var JsonObject:JsonObject;Property:text) Value:Text;
+    var
+      JsonValue: JsonValue;
     begin
-        if not JsonObject.Get(TokenKey,JsonToken) then
-            Error('Could not find a token with key %1',TokenKey);
+       if not GetJsonValue(JsonObject,Property,JsonValue) then
+          EXIT;
+       Value := JsonValue.AsText;
     end;
 
-        procedure SelectJsonToken(JsonObject:JsonObject;Path:text)JsonToken:JsonToken;
+    procedure GetJsonValueAsDecimal(var JsonObject:JsonObject;Property:text) Value:Decimal;
+    var
+      JsonValue: JsonValue;
+    begin
+       if not GetJsonValue(JsonObject,Property,JsonValue) then
+          EXIT;
+       Value := JsonValue.AsDecimal;
+    end;
+
+    local procedure GetJsonValue(var JsonObject:JsonObject;Property:text; var JsonValue:JsonValue) : Boolean;
+    var
+        JsonToken:JsonToken;
+    begin
+        if not JsonObject.Get(Property,JsonToken) then
+           exit;
+        JsonValue := JsonToken.AsValue;
+        Exit(true);
+    end;
+
+    procedure SelectJsonValueAsText(var JsonObject:JsonObject;Path:text) Value:Text;
+    var
+      JsonValue: JsonValue;
+    begin
+       if not SelectJsonValue(JsonObject,Path,JsonValue) then
+          EXIT;
+       Value := JsonValue.AsText;
+    end;
+
+
+    local procedure SelectJsonValue(var JsonObject:JsonObject;Path:text; var JsonValue:JsonValue) : Boolean;
+    var
+      JsonToken:JsonToken;
     begin
         if not JsonObject.SelectToken(Path,JsonToken) then
-            Error('Could not find a token with path %1',Path);
+           exit;
+        JsonValue := JsonToken.AsValue;
+        Exit(true);   
     end;
 }

@@ -77,8 +77,8 @@ codeunit 71000005 "AIR IATA Functions"
 
             WITH Airport do begin
                 INIT;
-                "Airport Code" := WebService.GetJsonToken(JsonObject,'code').AsValue.AsText;//JsonToken.AsValue.AsCode;
-                Name           := WebService.GetJsonToken(JsonObject,'name').AsValue.AsText;
+                "Airport Code" := WebService.GetJsonValueAsText(JsonObject,'code');
+                Name           := WebService.GetJsonValueAsText(JsonObject,'name');
                 //City           := WebService.GetJsonToken(JsonObject,'city').AsValue.AsText;
                 //Country        := WebService.GetJsonToken(JsonObject,'country_code').AsValue.AsText;
                                   //SelectJsonToken(JsonObject,'$.user.login').AsValue.AsText; //if nested structure

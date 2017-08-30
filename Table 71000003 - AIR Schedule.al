@@ -37,7 +37,7 @@ table 71000003 "AIR Schedule"
         }
         field(14;"Arrival Time";Text[30])
         {
-            CaptionML = ENU = 'Arrival date';
+            CaptionML = ENU = 'Arrival time';
 
         }
         field(15;"Destination";Code[20])
@@ -58,9 +58,13 @@ table 71000003 "AIR Schedule"
             OptionCaptionML = ENU = 'Did not take off,In the air,Landed';
         }
 
-        field(18;"Distance filled";Decimal)
+        field(18;"Distance";Decimal)
         {
-            CaptionML = ENU = 'Distance filled';
+            CaptionML = ENU = 'Distance';
+        }
+        field(19;"Destination City";text[50])
+        {
+            CaptionML = ENU = 'City';
         }
 
 
@@ -78,7 +82,7 @@ table 71000003 "AIR Schedule"
         fieldgroup(DropDown;"Flight Number",Departure,Destination,"Aircraft Type",
                             "Departure Date","Departure Time",
                             "Arrival Date","Arrival Time",
-                            "Progress %",Status) 
+                            "Distance","Progress %",Status) 
         {
 
         }
