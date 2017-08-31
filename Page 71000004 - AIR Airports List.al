@@ -4,7 +4,7 @@ page 71000004 "AIR Airports List"
     SourceTable = "AIR Airport";
     CaptionML = ENU = 'Airports List';
     Editable = false;
-
+    
     layout
     {
         area(content)
@@ -23,25 +23,25 @@ page 71000004 "AIR Airports List"
                 {
                     //ApplicationArea  = All;
                 }
-
+                
                 field(Country;Country)
                 {
                     //ApplicationArea  = All;
                 }
-
-
+                
+                
             }
         }
         area(factboxes)
         {
         }
     }
-
+    
     actions
     {
         area(processing)
         {
-            action(GetAirports)
+            Action(GetAirports)
             {
                 CaptionML = ENU = 'Update';
                 ToolTipML = ENU = 'Update airports from IATA service';
@@ -51,10 +51,10 @@ page 71000004 "AIR Airports List"
                 PromotedOnly = true;
                 ApplicationArea = All;
                 Image = UpdateXML;
-
+                
                 trigger OnAction();
                 var
-                  IATAFunctions : Codeunit "AIR IATA Functions";
+                    IATAFunctions: Codeunit "AIR IATA Functions";
                 begin
                     IATAFunctions.GetAirports();
                     CurrPage.Update;

@@ -36,12 +36,12 @@ page 71000002 "AIR Setup"
                 PromotedCategory = Report;
                 PromotedIsBig = true;
                 PromotedOnly = true;
-                Image = CodesList;
+                Image = Warehouse;
                 ApplicationArea = All;
             }
             action(Airplanes)
             {
-                Image = Components;
+                Image = Delivery;
                 Promoted = true;
                 PromotedIsBig = true;
                 PromotedOnly = true;
@@ -52,7 +52,7 @@ page 71000002 "AIR Setup"
                 var
                     AIRFunctions : Codeunit "AIR Functions";
                 begin
-                    AIRFunctions.ShowAirplanesList();
+                    AIRFunctions.ShowAirplanesList(false);
                 end;
             }
 
@@ -67,6 +67,7 @@ page 71000002 "AIR Setup"
         IF NOT GET THEN BEGIN
             INIT;
             INSERT;
-        END;     
+        END; 
+        ShowNotificationWhenAIRCategoryDoesNotExist;    
     end;
 }

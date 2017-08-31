@@ -11,7 +11,7 @@ codeunit 71000000 "AIR Functions"
         EXIT('50f37db2-5dc0-414b-ba49-53916c44764f')
     end;
 
-    procedure CheckIfAIRAppIsProperlySetuped() : Boolean;
+    procedure CheckIfAIRAppIsProperlySetuped(ShowNotification: Boolean) : Boolean;
     var 
         AIRSetup : Record "AIR Setup";
         AIRNotification: Codeunit "AIR Notifications";
@@ -19,19 +19,20 @@ codeunit 71000000 "AIR Functions"
         WITH AIRSetup do
            IF Not Get OR ("Airplane Category" = '') OR ("Airplane Type Attribute" = '') then
            Begin
-             AIRNotification.ShowNotificationWhenAIRappIsNotSetupedCorrectly();      
+             if ShowNotification then
+                AIRNotification.ShowNotificationWhenAIRappIsNotSetupedCorrectly();      
            EXIT(false);
            end;
         EXIT(true);
     end;
 
-    procedure ShowAirplanesList();
+    procedure ShowAirplanesList(ShowNotification: Boolean);
     var
         AIRSetup : Record "AIR Setup";
         AirplaneCategory: Code [20];
         Item: Record Item;
     begin
-        AirplaneCategory := AIRSetup.GetAirPlaneCategory();
+        AirplaneCategory := AIRSetup.GetAirPlaneCategory(ShowNotification);
         IF AirplaneCategory = '' THEN 
             EXIT;
         Item.SETRANGE("Item Category Code",AirplaneCategory);
@@ -44,7 +45,7 @@ codeunit 71000000 "AIR Functions"
         AirplaneCategory: Code [20];
         Item: Record Item;
     begin
-        AirplaneCategory := AIRSetup.GetAirPlaneCategory();
+        AirplaneCategory := AIRSetup.GetAirPlaneCategory(false);
         IF AirplaneCategory = '' THEN 
             EXIT;
         Item.SETRANGE("Item Category Code",AirplaneCategory);
@@ -94,7 +95,7 @@ codeunit 71000000 "AIR Functions"
         with ItemAttributeValueMapping do begin 
           SETRANGE("Table ID",DATABASE::Item);
           SETRANGE("No.",ItemNo);
-          SetRange("Item Attribute ID",GetItemAttributeIDFromName(AIRSetup.GetAirPlaneAttribute));
+          SetRange("Item Attribute ID",GetItemAttributeIDFromName(AIRSetup.GetAirPlaneAttribute(false)));
           IF FINDFIRST then
             if ItemAttributeValue.GET("Item Attribute ID","Item Attribute Value ID") then
                exit(ItemAttributeValue.Value);;
@@ -118,7 +119,7 @@ codeunit 71000000 "AIR Functions"
        WITH TempFilterItemAttributesBuffer do
        begin
          INIT;
-         VALIDATE(Attribute,AIRSetup.GetAirPlaneAttribute);
+         VALIDATE(Attribute,AIRSetup.GetAirPlaneAttribute(false));
          VALIDATE(Value,ValueFilter);
          Insert;
        end; 

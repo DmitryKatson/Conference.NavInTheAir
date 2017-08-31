@@ -5,24 +5,36 @@ codeunit 71000002 "AIR Notifications Actions"
     end;
     
     var
-
-    procedure RunAIRSetup(VAR MyNotification : Notification);
+    
+    procedure RunAIRSetup(var MyNotification : Notification);
     begin
-        PAGE.Run(PAGE::"AIR Setup");
+        Page.Run(Page::"AIR Setup");
     end;
-
-    procedure HideNotification(VAR MyNotification : Notification);
+    
+    procedure RunCreateNewItemAndImportImage(var MyNotification : Notification);
     var
-      MyNotifications : Record "My Notifications";
-      NotificationID : Guid;
+        Item: Record Item;
     begin
-      WITH MyNotifications DO BEGIN  
-         LOCKTABLE;
-         NotificationID := MyNotification.ID;
-         IF GET(USERID, NotificationID) THEN BEGIN
-            Enabled := FALSE;
-            MODIFY;
-         END;
-       END;  
+        Item.INIT;
+        Item.Description := 'new arplane';
+        if not Item.INSERT(true) then 
+          exit;
+        Page.Run(Page::"Item card",Item);
+
+    end;
+    
+    procedure HideNotification(var MyNotification : Notification);
+    var
+        MyNotifications: Record "My Notifications";
+        NotificationID: Guid;
+    begin
+        with MyNotifications do begin
+            LOCKTABLE;
+            NotificationID := MyNotification.ID;
+            if Get(UserId,NotificationID) then begin
+                Enabled := false;
+                Modify;
+            end;
+        end;
     end;
 }

@@ -180,13 +180,14 @@ page 71000003 "AIR Flight Register Wizard"
     }
   }
 
+
   trigger OnInit();
   begin
+         
     LoadTopBanners;
   end;
 
   trigger OnOpenPage();
-  var 
   begin
     INSERT;
 

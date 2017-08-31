@@ -78,7 +78,7 @@ page 71000001 "AIR Flight List"
             }
             action(Airplanes)
             {
-                Image = Components;
+                Image = Delivery;
                 Promoted = true;
                 PromotedIsBig = true;
                 PromotedOnly = true;
@@ -89,7 +89,7 @@ page 71000001 "AIR Flight List"
                 var
                     AIRFunctions : Codeunit "AIR Functions";
                 begin
-                    AIRFunctions.ShowAirplanesList();
+                    AIRFunctions.ShowAirplanesList(true);
                 end;
             }
         }
@@ -100,7 +100,7 @@ page 71000001 "AIR Flight List"
         AIRFunctions: Codeunit "AIR Functions";
 
     begin
-      IF NOT AIRFunctions.CheckIfAIRAppIsProperlySetuped Then 
+      IF NOT AIRFunctions.CheckIfAIRAppIsProperlySetuped(true) Then 
          EXIT;
 
     end;

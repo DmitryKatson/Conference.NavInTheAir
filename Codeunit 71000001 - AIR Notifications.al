@@ -40,4 +40,21 @@ codeunit 71000001 "AIR Notifications"
         END;
 
     end;
+
+    procedure ShowNotificationWhenAIRCategoryDoesNotExist();
+    var
+        MyNotifications : Record "My Notifications";
+        MyNotification: Notification;
+        AIRFunctions: Codeunit "AIR Functions";
+    begin
+        WITH MyNotification DO BEGIN
+          Id := 'd2adc7d7-7f36-47d2-8de9-593f30ba8367';
+          Message := 'Don''t have air category? Create it using new Cognitive service Image Analizer.';
+          Scope := NotificationScope::LocalScope;
+          AddAction('Create', CODEUNIT::"AIR Notifications Actions", 'RunCreateNewItemAndImportImage');
+          Send;
+        END;
+
+    end;
+
 }

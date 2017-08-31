@@ -43,24 +43,32 @@ table 71000001 "AIR Setup"
     begin
     end;
 
-    procedure GetAirPlaneCategory() : Code[20];
+    procedure GetAirPlaneCategory(ShowNotification: Boolean) : Code[20];
     var 
     AIRFunctions : Codeunit "AIR Functions";
     begin
-        IF NOT AIRFunctions.CheckIfAIRAppIsProperlySetuped then
+        IF NOT AIRFunctions.CheckIfAIRAppIsProperlySetuped(ShowNotification) then
            exit;
         GET;   
         EXIT("Airplane Category");
     end;
 
-    procedure GetAirPlaneAttribute() : Code[20];
+    procedure GetAirPlaneAttribute(ShowNotification: Boolean) : Code[20];
     var 
     AIRFunctions : Codeunit "AIR Functions";
     begin
-        IF NOT AIRFunctions.CheckIfAIRAppIsProperlySetuped then
+        IF NOT AIRFunctions.CheckIfAIRAppIsProperlySetuped(ShowNotification) then
            exit;
         GET;   
         EXIT("Airplane Type Attribute");
+    end;
+
+    procedure ShowNotificationWhenAIRCategoryDoesNotExist();
+    var
+        Notifications: Codeunit "AIR Notifications";
+    begin
+        If GetAirPlaneCategory(false) = '' then
+           Notifications.ShowNotificationWhenAIRCategoryDoesNotExist();
     end;
 
 
