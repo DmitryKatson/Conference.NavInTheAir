@@ -39,7 +39,7 @@ page 71000003 "AIR Flight Register Wizard"
         group(Step1Welcome)
         {
           Visible=FirstStepVisible;
-          CaptionML = ENU = 'Welcome to register New flight';
+          CaptionML = ENU = 'Welcome to register new flight';
           InstructionalTextML = ENU = 'This wizard will help you to register new flight. After filling all fields, click Finish.';                  
         }
         group(Step1LetsGo)
