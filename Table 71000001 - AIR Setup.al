@@ -71,5 +71,13 @@ table 71000001 "AIR Setup"
            Notifications.ShowNotificationWhenAIRCategoryDoesNotExist();
     end;
 
+    procedure ShowNotificationWhenAIRAttributeDoesNotExist();
+    var
+        Notifications: Codeunit "AIR Notifications";
+    begin
+        If GetAirPlaneAttribute(false) = '' then
+           Notifications.ShowNotificationWhenAIRAttributeDoesNotExist();
+    end;
+
 
 }

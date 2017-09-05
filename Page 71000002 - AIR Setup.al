@@ -68,6 +68,7 @@ page 71000002 "AIR Setup"
             INIT;
             INSERT;
         END; 
-        ShowNotificationWhenAIRCategoryDoesNotExist;    
+        ShowNotificationWhenAIRCategoryDoesNotExist;
+        ShowNotificationWhenAIRAttributeDoesNotExist; 
     end;
 }

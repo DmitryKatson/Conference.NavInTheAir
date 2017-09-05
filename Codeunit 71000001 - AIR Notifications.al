@@ -57,4 +57,21 @@ codeunit 71000001 "AIR Notifications"
 
     end;
 
+
+    procedure ShowNotificationWhenAIRAttributeDoesNotExist();
+    var
+        MyNotifications : Record "My Notifications";
+        MyNotification: Notification;
+        AIRFunctions: Codeunit "AIR Functions";
+    begin
+        WITH MyNotification DO BEGIN
+          Id := '4eb8ef57-bf95-4d07-ba95-f9253daf8f94';
+          Message := 'Don''t have air attribute?';
+          Scope := NotificationScope::LocalScope;
+          AddAction('Create', CODEUNIT::"AIR Notifications Actions", 'RunCreateAirplaneAttribute');
+          Send;
+        END;
+
+    end;
+
 }

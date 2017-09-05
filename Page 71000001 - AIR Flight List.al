@@ -5,7 +5,7 @@ page 71000001 "AIR Flight List"
     CardPageId = "AIR Flight Card";
     CaptionML = ENU = 'Flights';
     PromotedActionCategoriesML = ENU = 'New,Process,Navigate';
-
+    
     layout
     {
         area(content)
@@ -46,62 +46,83 @@ page 71000001 "AIR Flight List"
         {
         }
     }
-
+    
     actions
     {
         area(Creation)
         {
-            action(CreateWizard)
+            Action(CreateWizard)
             {
                 Image = CreateWhseLoc;
                 Promoted = true;
                 PromotedIsBig = true;
                 PromotedOnly = true;
                 PromotedCategory = New;
-                RunObject = page "AIR Flight Register Wizard";  
-                ApplicationArea = All;   
-                CaptionML = ENU = 'New flight'; 
-                ToolTipML = ENU = 'Register new flight with wizard';          
+                RunObject = Page "AIR Flight Register Wizard";
+                ApplicationArea = All;
+                CaptionML = ENU = 'New flight';
+                ToolTipML = ENU = 'Register new flight with wizard';
             }
         }
         area(processing)
-        {            
-            action(Setup)
+        {
+            Action(Setup)
             {
                 Image = Setup;
                 Promoted = true;
                 PromotedIsBig = true;
                 PromotedOnly = true;
                 PromotedCategory = Report;
-                RunObject = page "AIR Setup";  
-                ApplicationArea = All;              
+                RunObject = Page "AIR Setup";
+                ApplicationArea = All;
             }
-            action(Airplanes)
+            Action(Airplanes)
             {
                 Image = Delivery;
                 Promoted = true;
                 PromotedIsBig = true;
                 PromotedOnly = true;
                 PromotedCategory = Report;
-                ApplicationArea = All; 
-
+                ApplicationArea = All;
+                
                 trigger OnAction();
                 var
-                    AIRFunctions : Codeunit "AIR Functions";
+                    AIRFunctions: Codeunit "AIR Functions";
                 begin
                     AIRFunctions.ShowAirplanesList(true);
                 end;
             }
+            Action(ResetAll)
+            {
+                Image = ResetStatus;
+                Promoted = true;
+                PromotedCategory = Process;
+                PromotedIsBig = true;
+                PromotedOnly = true;
+                ApplicationArea = All;
+                
+                trigger OnAction();
+                var
+                    AIRFunctions: Codeunit "AIR Functions";                    
+                begin
+                    if Confirm('Do you really want to delete all data from NavInTheAir app?',True) then
+                    begin
+                        AIRFunctions.ResetExtensionEnvironment;
+                        Message('All data deleted');
+                        CurrPage.Update;
+                    end;
+                end;
+            }
         }
-    
+        
     }
     trigger OnOpenPage();
     var
         AIRFunctions: Codeunit "AIR Functions";
-
+        
     begin
-      IF NOT AIRFunctions.CheckIfAIRAppIsProperlySetuped(true) Then 
-         EXIT;
-
+        if not AIRFunctions.CheckIfAIRAppIsProperlySetuped(true) then
+            exit;
+            
     end;
 }
