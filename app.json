@@ -1,9 +1,9 @@
 {
   "id": "fdfae754-3528-40a3-87c6-351d9af55ba6",
   "name": "NavInTheAir",
-  "publisher": "D365 Meetup",
+  "publisher": "Dmitry Katson",
   "brief": "",
-  "description": "This App will register and monitor flights",
+  "description": "This app can register and monitor flights, show schedule from FlightAware.com service and download Airports from IATA service",
   "version": "1.0.0.0",
   "compatibilityId": "1.0.0.0",
   "privacyStatement": "",

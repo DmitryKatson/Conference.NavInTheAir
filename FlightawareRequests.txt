@@ -1,0 +1,2 @@
+https://dkatson:f7217091a2bdc7fda21686a1f157afa9a11e6d01@flightxml.flightaware.com/json/FlightXML3/AirportInfo?airport_code=KIAH
+https://dkatson:f7217091a2bdc7fda21686a1f157afa9a11e6d01@flightxml.flightaware.com/json/FlightXML3/AirportBoards?airport_code=LED&type=departures
