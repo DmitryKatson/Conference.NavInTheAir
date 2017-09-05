@@ -171,7 +171,7 @@ codeunit 71000000 "AIR Functions"
         ItemAttribute: Record "Item Attribute";
     begin
         if(AIRSetup.GetAirPlaneAttribute(false) <> '') then begin
-            ItemAttribute.Setrange(Name,AIRSetup.GetAirPlaneAttribute(false));
+            ItemAttribute.Setfilter(Name,Strsubstno('@%1',AIRSetup.GetAirPlaneAttribute(false)));
             ItemAttribute.DeleteAll(true);
         end;
     end;

@@ -94,13 +94,16 @@ page 71000001 "AIR Flight List"
             }
             Action(ResetAll)
             {
-                Image = ResetStatus;
+                Image = Overdue;
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedIsBig = true;
                 PromotedOnly = true;
                 ApplicationArea = All;
-                
+                CaptionML = ENU = 'Clear all';
+                ToolTipML = ENU = 'This will delete all setups and data related to NavInTheAir app, including related item cards.';
+                Visible = IsAppProperlySetuped;
+
                 trigger OnAction();
                 var
                     AIRFunctions: Codeunit "AIR Functions";                    
@@ -116,13 +119,13 @@ page 71000001 "AIR Flight List"
         }
         
     }
+    var
+    IsAppProperlySetuped : Boolean;
+
     trigger OnOpenPage();
     var
-        AIRFunctions: Codeunit "AIR Functions";
-        
+        AIRFunctions: Codeunit "AIR Functions";    
     begin
-        if not AIRFunctions.CheckIfAIRAppIsProperlySetuped(true) then
-            exit;
-            
+        IsAppProperlySetuped := AIRFunctions.CheckIfAIRAppIsProperlySetuped(true);
     end;
 }

@@ -17,6 +17,7 @@ codeunit 71000002 "AIR Notifications Actions"
     begin
         Item.INIT;
         Item.Description := 'new arplane';
+        Item."Base Unit of Measure" := 'PCS';
         if not Item.Insert(true) then
             exit;
         Page.Run(Page::"Item card",Item);
