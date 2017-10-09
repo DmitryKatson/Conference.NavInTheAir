@@ -4,7 +4,7 @@
 
 //here will be new table
 
-table 71000000 "AIR Flight"
+table 50000 "AIR Flight"
 {
     CaptionML = ENU = 'Flight';
     DataCaptionFields = "Flight Number","Aircraft Type";

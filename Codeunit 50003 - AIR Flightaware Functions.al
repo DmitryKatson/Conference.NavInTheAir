@@ -1,4 +1,4 @@
-codeunit 71000003 "Air Flightaware functions"
+codeunit 50003 "Air Flightaware functions"
 {
     trigger OnRun();
     begin

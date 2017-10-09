@@ -1,4 +1,4 @@
-page 71000000 "AIR Flight Card"
+page 50000 "AIR Flight Card"
 {
     PageType = Card;
     SourceTable = "AIR Flight";

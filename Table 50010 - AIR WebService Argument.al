@@ -1,4 +1,4 @@
-table 71000010 "AIR WebService Argument"
+table 50010 "AIR WebService Argument"
 {
     
     fields

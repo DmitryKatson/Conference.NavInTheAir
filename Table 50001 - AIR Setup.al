@@ -1,4 +1,4 @@
-table 71000001 "AIR Setup"
+table 50001 "AIR Setup"
 {
 
     fields

@@ -5,11 +5,11 @@
 			"type": "al",
 			"request": "publish",
 			"name": "Local server",
-			"server": "http://localhost",
-			"serverInstance": "US",
-			"tenant": "default",
-			"authentication": "Windows",
-			"startupObjectId": 71000001
+			"server": "https://nav2018us09.westeurope.cloudapp.azure.com",
+			"serverInstance": "NAV",
+			"tenant": "",
+			"authentication": "UserPassword",
+			"startupObjectId": 50001
 		}
 	]
 }

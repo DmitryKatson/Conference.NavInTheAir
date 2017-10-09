@@ -1,4 +1,4 @@
-page 71000002 "AIR Setup"
+page 50002 "AIR Setup"
 {
     PageType = Card;
     SourceTable = "AIR Setup";

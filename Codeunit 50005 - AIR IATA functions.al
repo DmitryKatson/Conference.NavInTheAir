@@ -1,4 +1,4 @@
-codeunit 71000005 "AIR IATA Functions"
+codeunit 50005 "AIR IATA Functions"
 {
     trigger OnRun();
     begin

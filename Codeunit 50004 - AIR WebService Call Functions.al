@@ -1,4 +1,4 @@
-codeunit 71000004 "AIR WebService Call Functions"
+codeunit 50004 "AIR WebService Call Functions"
 {
     //https://www.kauffmann.nl/2017/06/24/al-support-for-rest-web-services/
     //https://github.com/ajkauffmann/ALWebServiceExamples/blob/master/BaseObjects/Codeunits/RESTWebServiceCode.al

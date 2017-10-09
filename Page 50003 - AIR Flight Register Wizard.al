@@ -1,5 +1,5 @@
 
-page 71000003 "AIR Flight Register Wizard"
+page 50003 "AIR Flight Register Wizard"
 {
   CaptionML=ENU='Register new flight';
   PageType=NavigatePage;

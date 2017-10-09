@@ -1,4 +1,4 @@
-codeunit 71000000 "AIR Functions"
+codeunit 50000 "AIR Functions"
 {
     trigger OnRun();
     begin

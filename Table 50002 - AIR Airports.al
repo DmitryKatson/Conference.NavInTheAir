@@ -1,4 +1,4 @@
-table 71000002 "AIR Airport"
+table 50002 "AIR Airport"
 {
 
     fields

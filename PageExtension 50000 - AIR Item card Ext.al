@@ -1,4 +1,4 @@
-pageextension 71000000 "AIR Item Card Ext." extends "Item Card"
+pageextension 50000 "AIR Item Card Ext." extends "Item Card"
 {
     layout
     {

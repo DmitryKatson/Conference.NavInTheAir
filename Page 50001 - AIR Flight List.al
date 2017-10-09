@@ -1,4 +1,4 @@
-page 71000001 "AIR Flight List"
+page 50001 "AIR Flight List"
 {
     PageType = List;
     SourceTable = "AIR Flight";

@@ -1,4 +1,4 @@
-codeunit 71000002 "AIR Notifications Actions"
+codeunit 50002 "AIR Notifications Actions"
 {
     trigger OnRun();
     begin

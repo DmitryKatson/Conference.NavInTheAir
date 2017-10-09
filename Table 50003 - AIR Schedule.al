@@ -1,4 +1,4 @@
-table 71000003 "AIR Schedule"
+table 50003 "AIR Schedule"
 {
 
     CaptionML = ENU = 'Schedule';
