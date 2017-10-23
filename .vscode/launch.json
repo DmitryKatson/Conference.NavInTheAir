@@ -3,9 +3,9 @@
 	"configurations": [
 		{
 			"type": "al",
-			"request": "publish",
+			"request": "launch",
 			"name": "Local server",
-			"server": "https://nav2018us09.westeurope.cloudapp.azure.com",
+			"server": "https://nav2018us10.westeurope.cloudapp.azure.com",
 			"serverInstance": "NAV",
 			"tenant": "",
 			"authentication": "UserPassword",
